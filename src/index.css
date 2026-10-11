@@ -1,0 +1,604 @@
+:root {
+  --c-dark: #0b2545;
+  --c-blue: #1a56a0;
+  --c-bg: #f2f5f9;
+  --c-line: #b8c2cc;
+
+  --c-alta: #f4b8b0;
+  --c-media: #fde5a8;
+  --c-baja: #d6ebcf;
+  --c-none: #f1f3f5;
+
+  --c-text: #1b2733;
+  --c-muted: #5b6770;
+  --c-link: #0b3a7a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  height: 100vh;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
+}
+
+.chat__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--c-dark);
+  color: #fff;
+}
+
+.chat__title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.chat__subtitle {
+  margin: 2px 0 0;
+  font-size: .8rem;
+  opacity: .8;
+}
+
+.chat__reset {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.chat__reset:hover {
+  background: rgba(255, 255, 255, .1);
+}
+
+.chat__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat__form {
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--c-line);
+  background: #fff;
+}
+
+.chat__input {
+  flex: 1;
+  padding: 11px;
+  border: 1px solid var(--c-line);
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.chat__input:focus {
+  border-color: var(--c-blue);
+}
+
+.chat__send {
+  background: var(--c-blue);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 22px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.chat__send:hover {
+  background: #144886;
+}
+
+.chat__send:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+/* =========================================================
+   MENSAJES
+========================================================= */
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.message--user {
+  align-items: flex-end;
+}
+
+.message--assistant {
+  align-items: flex-start;
+}
+
+/*
+ * Compatibilidad por si alguna parte del HTML
+ * utiliza message--bot.
+ */
+.message--bot {
+  align-items: flex-start;
+}
+
+.message__bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+.message--user .message__bubble {
+  background: var(--c-blue);
+  color: #fff;
+  border-bottom-right-radius: 3px;
+}
+
+.message--assistant .message__bubble,
+.message--bot .message__bubble {
+  background: #e9eef5;
+  border-bottom-left-radius: 3px;
+}
+
+.message__bubble--loading {
+  opacity: .6;
+  font-style: italic;
+}
+
+.message__bubble--error {
+  background: #fde0dd;
+}
+
+.message__bubble--diagnosis {
+  max-width: 100%;
+  width: 100%;
+  background: #fff;
+  padding: 0;
+}
+
+/* =========================================================
+   DIAGNÓSTICO
+========================================================= */
+
+.diagnosis {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.diagnosis__title {
+  margin: 0 0 6px;
+  font-size: .95rem;
+}
+
+.diagnosis__summary {
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.diagnosis__section-title {
+  margin: 18px 0 6px;
+  font-size: .9rem;
+}
+
+/* =========================================================
+   MATRIZ TIPO EXCEL
+========================================================= */
+
+.diagnosis-matrix-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid var(--c-line);
+  border-radius: 6px;
+  background: #fff;
+  margin-top: 8px;
+}
+
+.diagnosis-matrix {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 1100px;
+  table-layout: fixed;
+  font-size: .75rem;
+}
+
+/*
+ * Todas las celdas de la matriz
+ */
+.diagnosis-matrix th,
+.diagnosis-matrix td {
+  border: 1px solid var(--c-line);
+  padding: 7px;
+  vertical-align: top;
+}
+
+/*
+ * Esquina superior izquierda
+ */
+.diagnosis-matrix__corner {
+  width: 150px;
+  min-width: 150px;
+  background: var(--c-dark);
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+}
+
+/*
+ * Encabezados de las áreas
+ */
+.diagnosis-matrix__area {
+  min-width: 135px;
+  height: 48px;
+  background: var(--c-dark);
+  color: #fff;
+  text-align: center;
+  vertical-align: middle !important;
+  font-weight: 600;
+}
+
+/*
+ * Encabezados de las capas
+ */
+.diagnosis-matrix__layer {
+  width: 150px;
+  min-width: 150px;
+  background: #e8edf3;
+  color: var(--c-text);
+  font-weight: 600;
+  text-align: left;
+  vertical-align: middle !important;
+}
+
+/*
+ * Celdas donde aparecen las soluciones
+ */
+.diagnosis-matrix__cell {
+  min-width: 135px;
+  height: 85px;
+  background: var(--c-none);
+  color: var(--c-text);
+}
+
+/* =========================================================
+   PRIORIDADES DE LAS CELDAS
+========================================================= */
+
+/*
+ * ALTA
+ */
+.diagnosis-matrix__cell.priority-high {
+  background: var(--c-alta);
+}
+
+/*
+ * MEDIA
+ */
+.diagnosis-matrix__cell.priority-medium {
+  background: var(--c-media);
+}
+
+/*
+ * BAJA
+ */
+.diagnosis-matrix__cell.priority-low {
+  background: var(--c-baja);
+}
+
+/*
+ * SIN OPORTUNIDAD
+ */
+.diagnosis-matrix__cell.priority-none {
+  background: var(--c-none);
+}
+
+/* =========================================================
+   SOLUCIONES DENTRO DE LA MATRIZ
+========================================================= */
+
+.diagnosis-matrix__solution {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--c-link);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.diagnosis-matrix__solution:last-child {
+  margin-bottom: 0;
+}
+
+.diagnosis-matrix__opportunity {
+  color: var(--c-muted);
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* =========================================================
+   LEYENDA
+========================================================= */
+
+.diagnosis-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  font-size: .75rem;
+}
+
+.diagnosis-legend__title {
+  font-weight: 600;
+}
+
+.diagnosis-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.diagnosis-legend__color {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  border: 1px solid var(--c-line);
+}
+
+.diagnosis-legend__color.priority-high {
+  background: var(--c-alta);
+}
+
+.diagnosis-legend__color.priority-medium {
+  background: var(--c-media);
+}
+
+.diagnosis-legend__color.priority-low {
+  background: var(--c-baja);
+}
+
+.diagnosis-legend__color.priority-none {
+  background: var(--c-none);
+}
+
+/* =========================================================
+   DETALLE DE OPORTUNIDADES
+========================================================= */
+
+.diagnosis-details {
+  margin-top: 2rem;
+}
+
+.diagnosis-details__title {
+  margin: 0 0 .5rem;
+  font-size: 1rem;
+}
+
+.diagnosis-details__empty {
+  color: var(--c-muted);
+}
+
+.diagnosis-detail {
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.diagnosis-detail__title {
+  margin: 0 0 .5rem;
+  font-size: .95rem;
+}
+
+.diagnosis-detail__priority {
+  display: inline-block;
+  padding: 3px 8px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-size: .75rem;
+  font-weight: 600;
+  border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.diagnosis-detail__priority.priority-high {
+  background: var(--c-alta);
+}
+
+.diagnosis-detail__priority.priority-medium {
+  background: var(--c-media);
+}
+
+.diagnosis-detail__priority.priority-low {
+  background: var(--c-baja);
+}
+
+.diagnosis-detail__priority.priority-none {
+  background: var(--c-none);
+}
+
+/* =========================================================
+   SOLUCIONES DETALLADAS
+========================================================= */
+
+.diagnosis-detail__solutions-title {
+  margin: 1.2rem 0 .7rem;
+  font-size: .9rem;
+}
+
+.diagnosis-solution {
+  padding: 1rem;
+  margin-bottom: .8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fafbfc;
+}
+
+.diagnosis-solution:last-child {
+  margin-bottom: 0;
+}
+
+.diagnosis-solution__name {
+  margin: 0 0 .25rem;
+  font-size: .9rem;
+  color: var(--c-dark);
+}
+
+.diagnosis-solution__category {
+  margin-bottom: .8rem;
+  font-size: .8rem;
+  color: var(--c-muted);
+}
+
+.diagnosis-solution p {
+  margin: 0 0 .75rem;
+  line-height: 1.5;
+}
+
+.diagnosis-solution strong {
+  display: block;
+  margin-top: .7rem;
+  margin-bottom: .25rem;
+}
+
+.diagnosis-solution__why-title {
+  color: var(--c-dark);
+}
+
+.diagnosis-solution__why {
+  line-height: 1.5;
+}
+
+.diagnosis-solution__validation {
+  margin: .4rem 0 .8rem;
+  padding-left: 1.3rem;
+}
+
+.diagnosis-solution__validation li {
+  margin-bottom: .3rem;
+  line-height: 1.4;
+}
+
+.diagnosis-solution__link {
+  display: inline-block;
+  margin-top: .5rem;
+  color: var(--c-link);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.diagnosis-solution__link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   PRIORIDADES
+========================================================= */
+
+.diagnosis-priorities {
+  margin-top: 2rem;
+}
+
+.diagnosis-priorities h3 {
+  margin-bottom: .5rem;
+}
+
+.diagnosis-priorities ul {
+  margin-top: 0;
+  padding-left: 1.3rem;
+}
+
+.diagnosis-priorities li {
+  margin-bottom: .4rem;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   SIGUIENTE PASO
+========================================================= */
+
+.diagnosis-next-step {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-left: 4px solid var(--c-blue);
+  background: #f2f5f9;
+}
+
+.diagnosis-next-step h3 {
+  margin: 0 0 .4rem;
+}
+
+.diagnosis-next-step p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+  .chat {
+    width: 100%;
+    max-width: none;
+  }
+
+  .chat__header {
+    padding: 12px;
+  }
+
+  .chat__messages {
+    padding: 12px;
+  }
+
+  .chat__form {
+    padding: 10px;
+  }
+
+  .chat__send {
+    padding: 0 15px;
+  }
+
+  .message__bubble {
+    max-width: 95%;
+  }
+
+  .diagnosis-matrix {
+    min-width: 1100px;
+  }
+
+  .diagnosis-detail {
+    padding: 1rem;
+  }
+}
+
+
+
